@@ -27,19 +27,19 @@ const (
 	defaultCACert     = "bundle/server.cer.pem"
 )
 
-var (
-	host       string
-	topic      string
-	clientCert string
-	clientKey  string
-	caCert     string
-)
-
 func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
 func main() {
+	var (
+		host       string
+		topic      string
+		clientCert string
+		clientKey  string
+		caCert     string
+	)
+
 	flag.StringVar(&host, "host", defaultHost, "Kafka host")
 	flag.StringVar(&topic, "topic", defaultTopic, "Kafka topic")
 	flag.StringVar(&clientCert, "clientCert", defaultClientCert, "Client Certificate")

@@ -26,15 +26,15 @@ const (
 	defaultCACert     = "bundle/server.cer.pem"
 )
 
-var (
-	host       string
-	topic      string
-	clientCert string
-	clientKey  string
-	caCert     string
-)
-
 func main() {
+	var (
+		host       string
+		topic      string
+		clientCert string
+		clientKey  string
+		caCert     string
+	)
+
 	flag.StringVar(&host, "host", defaultHost, "Kafka host")
 	flag.StringVar(&topic, "topic", defaultTopic, "Kafka topic")
 	flag.StringVar(&clientCert, "clientCert", defaultClientCert, "Client Certificate")
@@ -95,14 +95,14 @@ func consumerLoop(consumer sarama.Consumer, topic string) {
 	for partition := range partitions {
 		wg.Add(1)
 		go func() {
-			consumePartition(consumer, int32(partition), signals)
+			consumePartition(consumer, topic, int32(partition), signals)
 			wg.Done()
 		}()
 	}
 	wg.Wait()
 }
 
-func consumePartition(consumer sarama.Consumer, partition int32, signals chan os.Signal) {
+func consumePartition(consumer sarama.Consumer, topic string, partition int32, signals chan os.Signal) {
 	log.Println("Receving on partition", partition)
 	partitionConsumer, err := consumer.ConsumePartition(topic, partition, sarama.OffsetNewest)
 	if err != nil {

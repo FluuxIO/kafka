@@ -43,9 +43,9 @@ func main() {
 	flag.Parse()
 
 	pemFiles := auth.PemFiles{
-		ClientCert: "bundle/client.cer.pem",
-		ClientKey:  "bundle/client.key.pem",
-		CACert:     "bundle/server.cer.pem",
+		ClientCert: clientCert,
+		ClientKey:  clientKey,
+		CACert:     caCert,
 	}
 
 	consumer, err := consumerSetup(host, pemFiles)
